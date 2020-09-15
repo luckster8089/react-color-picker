@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState } from 'react'
 import './ColorBox.css'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
