@@ -33,6 +33,7 @@ const styles = {
 }
 
 function PaletteList({ classes, palettes }) {
+
     return (
         <div className={classes.root}>
             <div className={classes.container}>
