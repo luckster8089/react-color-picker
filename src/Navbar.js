@@ -32,7 +32,7 @@ export default function Navbar({ level, changeLevel, handleChanges, showingAllCo
             
             {showingAllColors &&
             <div className="slider-container">
-                <span>Level: {level}</span>
+                <span>Opacity Level: {level}</span>
                 <div className="slider">
                     <Slider 
                         defaultValue={level} 
