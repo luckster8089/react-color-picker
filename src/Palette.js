@@ -10,7 +10,14 @@ export default function Palette({ palette }) {
     const { colors, paletteName, emoji, id } = palette
 
     const colorBoxes = colors[level].map(color => (
-        <ColorBox background={color[format]} name={color.name} key={color.id} paletteId={id} colorId={color.id} />
+        <ColorBox 
+            background={color[format]} 
+            name={color.name} 
+            key={color.id} 
+            paletteId={id} 
+            colorId={color.id} 
+            showLink={true}
+        />
     ))
 
     function changeLevel(newLevel) {
