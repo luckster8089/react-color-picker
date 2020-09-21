@@ -17,7 +17,7 @@ export default function Palette({ palette }) {
             key={color.id} 
             paletteId={id} 
             colorId={color.id} 
-            showLink={true}
+            showingFullPalette={true}
         />
     ))
 
