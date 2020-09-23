@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import clsx from 'clsx';
-import { withStyles, useTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -73,8 +73,9 @@ const styles = theme => ({
 });
 
 function NewPaletteForm({ classes }) {
-    const theme = useTheme();
     const [open, setOpen] = useState(false)
+    const [currentColor, setCurrentColor] = useState('teal')
+    const [colors, setColors] = useState(["purple", "#e15732"])
   
     const handleDrawerOpen = () => {
       setOpen(true);
@@ -83,6 +84,14 @@ function NewPaletteForm({ classes }) {
     const handleDrawerClose = () => {
       setOpen(false);
     };
+
+    function updateCurrentColor(newColor) {
+        setCurrentColor(newColor.hex)
+    }
+
+    function createColor() {
+        setColors([...colors, currentColor])
+    }
   
     return (
       <div className={classes.root}>
@@ -130,15 +139,23 @@ function NewPaletteForm({ classes }) {
           <Button variant="contained" color="secondary">Clear Palette</Button>
           <Button variant="contained" color="primary">Random Color</Button>
           </div>
-          <ChromePicker color="purple" onChangeComplete={(newColor) => console.log(newColor)}/>
-          <Button variant="contained" color="primary">Add Color</Button>
+          <ChromePicker color={currentColor} onChangeComplete={updateCurrentColor}/>
+          <Button variant="contained" color="primary" style={{ backgroundColor: currentColor }} onClick={createColor}>
+          Add Color
+          </Button>
         </Drawer>
         <main
           className={clsx(classes.content, {
             [classes.contentShift]: open,
           })}
         >
-          <div className={classes.drawerHeader} />
+        <div className={classes.drawerHeader} />
+        <ul>
+          {colors.map(color => (
+              <li style={{ backgroundColor: color }}>{color}</li>
+          ))}
+
+        </ul>
         </main>
       </div>
     )
