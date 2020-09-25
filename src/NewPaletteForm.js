@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom' 
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -75,13 +76,13 @@ const styles = theme => ({
   },
 });
 
-function NewPaletteForm({ classes }) {
+function NewPaletteForm({ classes, savePalette }) {
     const [open, setOpen] = useState(false)
     const [currentColor, setCurrentColor] = useState('teal')
     const [colors, setColors] = useState([{color: "blue", name: "blue"}])
     const [newName, setNewName] = useState('')
 
-
+    const history = useHistory()
   
     const handleDrawerOpen = () => {
       setOpen(true);
@@ -107,6 +108,17 @@ function NewPaletteForm({ classes }) {
         setNewName(e.target.value)
     }
 
+    function handleSubmit() {
+        let newName = "New Test Palette"
+        const newPalette = {
+            paletteName: newName,
+            id: newName.toLowerCase().replace(/ /g, "-"),
+            colors: colors
+        }
+        savePalette(newPalette)
+        history.push("/")
+    }
+
     useEffect(() => {
         ValidatorForm.addValidationRule('isColorNameUnique', value => 
             colors.every(
@@ -124,6 +136,7 @@ function NewPaletteForm({ classes }) {
         <CssBaseline />
         <AppBar
           position="fixed"
+          color="default"
           className={clsx(classes.appBar, {
             [classes.appBarShift]: open,
           })}
@@ -141,6 +154,9 @@ function NewPaletteForm({ classes }) {
             <Typography variant="h6" noWrap>
               Persistent drawer
             </Typography>
+            <Button variant="contained" color="primary" onClick={handleSubmit}>
+                Save Palette
+            </Button>
           </Toolbar>
         </AppBar>
         <Drawer
