@@ -20,23 +20,6 @@ const styles = theme => ({
   root: {
     display: 'flex',
   },
-  appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
   hide: {
     display: 'none',
   },
@@ -126,7 +109,7 @@ function NewPaletteForm({ classes, savePalette, palettes, maxColors }) {
 
     return (
       <div className={classes.root}>
-        <PaletteFormNav open={open} classes={classes} palettes={palettes} handleSubmit={handleSubmit} handleDrawerOpen={handleDrawerOpen} />
+        <PaletteFormNav open={open} palettes={palettes} handleSubmit={handleSubmit} handleDrawerOpen={handleDrawerOpen} />
         <Drawer
           className={classes.drawer}
           variant="persistent"
