@@ -77,15 +77,16 @@ const styles = theme => ({
   },
 });
 
-function NewPaletteForm({ classes, savePalette, palettes }) {
+function NewPaletteForm({ classes, savePalette, palettes, maxColors }) {
     const [open, setOpen] = useState(false)
     const [currentColor, setCurrentColor] = useState('teal')
-    const [colors, setColors] = useState([{color: "blue", name: "blue"}])
+    const [colors, setColors] = useState(palettes[0].colors)
     const [newName, setNewName] = useState('')
     const [newPaletteName, setNewPaletteName] = useState('')
+    const paletteIsFull = colors.length >= maxColors
 
     const history = useHistory()
-  
+
     const handleDrawerOpen = () => {
       setOpen(true);
     };
@@ -108,6 +109,18 @@ function NewPaletteForm({ classes, savePalette, palettes }) {
 
     function handleChange(e) {
         setNewName(e.target.value)
+    }
+
+    function clearColors() {
+      setColors([])
+    }
+
+    function addRandomColor() {
+      // Flat: Combines everything into one array
+      const allColors = palettes.map(p => p.colors).flat();
+      const rand = Math.floor(Math.random() * allColors.length);
+      const randomColor = allColors[rand]
+      setColors([...colors, randomColor])
     }
 
     function handlePaletteNameChange(e) {
@@ -201,8 +214,21 @@ function NewPaletteForm({ classes, savePalette, palettes }) {
             Design Your Palette
           </Typography>
           <div>
-          <Button variant="contained" color="secondary">Clear Palette</Button>
-          <Button variant="contained" color="primary">Random Color</Button>
+          <Button 
+            variant="contained" 
+            color="secondary" 
+            onClick={clearColors}
+          >
+            Clear Palette
+          </Button>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            onClick={addRandomColor}
+            disabled={paletteIsFull}
+          >
+            Random Color
+          </Button>
           </div>
           <ChromePicker color={currentColor} onChangeComplete={updateCurrentColor}/>
             <ValidatorForm onSubmit={createColor}>
@@ -220,8 +246,8 @@ function NewPaletteForm({ classes, savePalette, palettes }) {
                         "Color already used"
                     ]}
                     />
-                <Button variant="contained" color="primary" style={{ backgroundColor: currentColor }} type="submit">
-                Add Color
+                <Button variant="contained" color="primary" disabled={paletteIsFull} style={{ backgroundColor: paletteIsFull ? "grey" : currentColor }} type="submit">
+                {paletteIsFull ? "Palette Full" : "Add Color"}
                 </Button>
             </ValidatorForm>
         </Drawer>
@@ -240,6 +266,10 @@ function NewPaletteForm({ classes, savePalette, palettes }) {
         </main>
       </div>
     )
+}
+
+NewPaletteForm.defaultProps = {
+  maxColors: 20
 }
 
 export default withStyles(styles, {withTheme: true})(NewPaletteForm)
