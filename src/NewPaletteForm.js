@@ -29,6 +29,8 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    display: "flex",
+    alignItems: "center",
   },
   drawerHeader: {
     display: 'flex',
@@ -55,6 +57,20 @@ const styles = theme => ({
     }),
     marginLeft: 0,
   },
+  container: {
+    width: "90%",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  buttons: {
+    width: "100%"
+  },
+  button: {
+    width: "50%"
+  }
 });
 
 function NewPaletteForm({ classes, savePalette, palettes, maxColors }) {
@@ -125,14 +141,16 @@ function NewPaletteForm({ classes, savePalette, palettes, maxColors }) {
             </IconButton>
           </div>
           <Divider />
-          <Typography variant="h4">
+          <div className={classes.container}>
+          <Typography variant="h4" gutterBottom>
             Design Your Palette
           </Typography>
-          <div>
+          <div className={classes.buttons}>
           <Button 
             variant="contained" 
             color="secondary" 
             onClick={clearColors}
+            className={classes.button}
           >
             Clear Palette
           </Button>
@@ -141,11 +159,13 @@ function NewPaletteForm({ classes, savePalette, palettes, maxColors }) {
             color="primary" 
             onClick={addRandomColor}
             disabled={paletteIsFull}
+            className={classes.button}
           >
             Random Color
           </Button>
           </div>
           <ColorPickerForm paletteIsFull={paletteIsFull} createColor={createColor} colors={colors} />
+          </div>
         </Drawer>
         <main
           className={clsx(classes.content, {
