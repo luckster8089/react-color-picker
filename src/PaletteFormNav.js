@@ -57,6 +57,10 @@ function PaletteFormNav({ classes, open, handleDrawerOpen, palettes, handleSubmi
       setFormShowing(true)
     }
 
+    function hideForm() {
+      setFormShowing(false)
+    }
+
     return (
         <div className={classes.root}>
         <CssBaseline />
@@ -92,7 +96,7 @@ function PaletteFormNav({ classes, open, handleDrawerOpen, palettes, handleSubmi
           </div>
         </AppBar>
         {formShowing &&  
-          <PaletteMetaForm palettes={palettes} handleSubmit={handleSubmit}/> 
+          <PaletteMetaForm palettes={palettes} handleSubmit={handleSubmit} hideForm={hideForm}/> 
         }
         </div>
     )
