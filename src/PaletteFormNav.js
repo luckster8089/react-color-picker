@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import PaletteMetaForm from './PaletteMetaForm'
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button'
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 
 const drawerWidth = 400;
@@ -44,19 +44,6 @@ const styles = theme => ({
 });
 
 function PaletteFormNav({ classes, open, handleDrawerOpen, palettes, handleSubmit }) {
-    const [newPaletteName, setNewPaletteName] = useState('')
-
-    function handlePaletteNameChange(e) {
-        setNewPaletteName(e.target.value)
-    }
-
-    useEffect(() => {
-        ValidatorForm.addValidationRule('isPaletteNameUnique', value => 
-        palettes.every(
-            ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
-        ));
-    })
-
     return (
         <div className={classes.root}>
         <CssBaseline />
@@ -82,12 +69,7 @@ function PaletteFormNav({ classes, open, handleDrawerOpen, palettes, handleSubmi
             </Typography>
           </Toolbar>
           <div className={classes.navButtons}>
-            <ValidatorForm onSubmit={() => handleSubmit(newPaletteName)}>
-            <TextValidator label="Palette Name" name="newPaletteName" value={newPaletteName} onChange={handlePaletteNameChange} validators={["required", "isPaletteNameUnique"]} errorMessages={["Enter Palette Name", "Name already used"]} />
-            <Button variant="contained" color="primary" type="submit">
-                Save Palette
-            </Button>
-            </ValidatorForm>
+            <PaletteMetaForm palettes={palettes} handleSubmit={handleSubmit}/>
             <Link to="/">
             <Button variant="contained" color="secondary">Go Back</Button>
             </Link>
